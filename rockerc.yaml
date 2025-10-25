@@ -1,0 +1,34 @@
+apt_base:
+  - build-essential
+  - libeigen3-dev
+
+apt_sources:
+  - git
+  - wget
+  - ca-certificates
+  - curl
+  - lsb-release
+  - gnupg2
+
+apt_language-toolchain:
+  - python3-pip
+  - make
+  - gcc
+  - g++
+
+apt:
+  - libasound2
+  - pkg-config
+
+pip_language-toolchain:
+  - pip
+
+pip:
+  - numpy
+  - tabulate
+  - fire
+  - pandas
+  - xmltodict
+  - pybullet
+  - ompl
+
