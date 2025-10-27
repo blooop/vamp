@@ -78,8 +78,15 @@ setup-debug = { depends-on = ["setup-deps", "build-and-install-debug"] }
 # Install Python dependencies only
 setup-deps = "pip install fire pybullet pyyaml tqdm pandas tabulate xmltodict"
 
-# Build and install using a workaround approach
-build-and-install = { cmd = "bash -c 'mkdir -p /tmp/vamp_install && export CC=clang CXX=clang++ CMAKE_PREFIX_PATH=/vamp/.pixi/envs/default CMAKE_INSTALL_PREFIX=/tmp/vamp_install && cd /tmp && cp -r /vamp /tmp/vamp_src && cd /tmp/vamp_src && pip install -e .[examples] --no-build-isolation && cp -r src/vamp /vamp/.pixi/envs/default/lib/python3.12/site-packages/ || echo \"Build failed, trying manual approach\"'", cwd = "/vamp" }
+# Build and install with external directory approach
+        # Install from PyPI (recommended)
+        install = "pip install vamp-planner"
+        
+        # Install from source with examples  
+        install-dev = { cmd = "pip install -e '.[examples]'", env = { CC = "clang", CXX = "clang++" } }
+        
+        # Incremental rebuild (as per README)
+        rebuild = "pip install --no-build-isolation -Ceditable.rebuild=true -ve ."
 
 build-and-install-debug = { cmd = "bash -c 'mkdir -p /tmp/vamp_install && export CC=clang CXX=clang++ CMAKE_PREFIX_PATH=/vamp/.pixi/envs/default CMAKE_INSTALL_PREFIX=/tmp/vamp_install CMAKE_BUILD_TYPE=Debug && cd /tmp && cp -r /vamp /tmp/vamp_src && cd /tmp/vamp_src && pip install -e .[examples] --no-build-isolation && cp -r src/vamp /vamp/.pixi/envs/default/lib/python3.12/site-packages/ || echo \"Build failed, trying manual approach\"'", cwd = "/vamp" }
 
@@ -123,4 +130,4 @@ cpp-rrtc = { cmd = "cd scripts/cpp && ./build/rrtc_example", depends-on = ["buil
 # Development and Debugging
 check-env = "echo '🔍 Environment Check:' && python --version && cmake --version && clang --version && echo '✅ Environment ready'"
 clean = "rm -rf build/ dist/ *.egg-info/ .pixi/envs/default/lib/python*/site-packages/vamp*"
-rebuild = { depends-on = ["clean", "setup"] }
+full-rebuild = { depends-on = ["clean", "setup"] }
