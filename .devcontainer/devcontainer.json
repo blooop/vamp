@@ -1,0 +1,23 @@
+{
+  "name": "VAMP",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ],
+      "settings": {
+        "C_Cpp.intelliSenseEngine": "disabled",
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "cmake.generator": "Ninja"
+      }
+    }
+  },
+  "postCreateCommand": "pip install --break-system-packages -v '.[examples,heightmaps]'",
+  "remoteUser": "vscode"
+}
